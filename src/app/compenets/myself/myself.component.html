@@ -1,0 +1,70 @@
+<div class="container">
+    <app-header></app-header>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col d-flex justify-content-center align-items-center flex-column">
+                    <img [src]='this.mySelf[0].imageUrl' alt="Profile_Image" style="height: 180px;">
+                    <h3 class="fw-bold">{{this.mySelf[0].name}}</h3>
+                    <p>{{this.mySelf[0].jobTitle}}</p>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center flex-column">
+                <div class="col">
+                    {{this.mySelf[0].quests}}
+                </div>
+                <div class="col mt-4">
+                    {{this.mySelf[0].description}}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title> My Self </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="d-flex flex-column ">
+                    <form [formGroup]="mySelfForm" (ngSubmit)="onSubmit()" class="d-flex flex-column ">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Name</mat-label>
+                            <input matInput type="text" formControlName="name" required>
+                            <mat-error *ngIf="mySelfForm.get('name')?.hasError('required')">Name is required</mat-error>
+                        </mat-form-field>
+
+                        <div class="form-field">
+                            <label for="description">Image</label>
+                            <div class="custom-file-input">
+                                <input type="file" id="description" name="description" (change)="onFileSelected($event)"
+                                    accept="image/*">
+                                <label for="description">Choose Image</label>
+                            </div>
+                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Quests</mat-label>
+                            <textarea matInput formControlName="quests" required></textarea>
+                            <mat-error *ngIf="mySelfForm.get('quests')?.hasError('required')">Quests are
+                                required</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput formControlName="description"></textarea>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Job Title</mat-label>
+                            <input matInput type="text" formControlName="jobTitle" required>
+                            <mat-error *ngIf="mySelfForm.get('jobTitle')?.hasError('required')">Job Title is
+                                required</mat-error>
+                        </mat-form-field>
+
+                        <button mat-raised-button color="primary" type="submit">Submit</button>
+                    </form>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>

@@ -3,36 +3,30 @@ import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/compat/
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 
-export interface Project {
-  id?: string;
-  projectName: string;
-  description: string;
-  imageUrl: string;
-  link: string;
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class CurdService {
-  private projectsCollection!: AngularFirestoreCollection<Project>;
-  private projects$!: Observable<Project[]>;
+  private projectsCollection!: AngularFirestoreCollection<any>;
+  private projects$!: Observable<any>;
 
   constructor(private afs: AngularFirestore, private storage: AngularFireStorage) { }
 
-  getProjects(collectionName: string): Observable<Project[]> {
-    this.projectsCollection = this.afs.collection<Project>(collectionName);
+  getProjects(collectionName: string): Observable<any> {
+    this.projectsCollection = this.afs.collection<any>(collectionName);
     this.projects$ = this.projectsCollection.valueChanges({ idField: 'id' });
     return this.projects$;
   }
 
-  addProject(collectionName: string, project: Project): Promise<DocumentReference<Project>> {
-    const collection = this.afs.collection<Project>(collectionName);
+  addProject(collectionName: string, project: any): Promise<DocumentReference<any>> {
+    const collection = this.afs.collection<any>(collectionName);
     return collection.add(project);
   }
 
+
   uploadFile(collectionName: string, filePath: string, file: File): AngularFireUploadTask {
-    const collection = this.afs.collection<Project>(collectionName);
+    const collection = this.afs.collection<any>(collectionName);
     const task = this.storage.upload(filePath, file);
     return task;
   }

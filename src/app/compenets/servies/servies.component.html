@@ -1,0 +1,27 @@
+<div class="container">
+    <app-header></app-header>
+    <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="iconName">
+            <mat-header-cell *matHeaderCellDef> Icon Name </mat-header-cell>
+            <mat-cell *matCellDef="let service"> {{ service.iconName }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="serviceName">
+            <mat-header-cell *matHeaderCellDef> Service Name </mat-header-cell>
+            <mat-cell *matCellDef="let service"> {{ service.serviceName }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="serviceDescription">
+            <mat-header-cell *matHeaderCellDef> Service Description </mat-header-cell>
+            <mat-cell *matCellDef="let service"> {{ service.serviceDescription }} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns:displayedColumns"></mat-row>
+    </mat-table>
+
+    <button mat-fab class="bg-primary rounded-5 p-3 border-0 position-absolute end-0 bottom-0" color="warn"
+        (click)="openDialog()">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>

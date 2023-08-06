@@ -1,0 +1,36 @@
+<div class="container">
+    <app-header></app-header>
+    <div *ngIf="projects && projects.length > 0">
+        <div class="card-container">
+            <div class="card" *ngFor="let project of projects">
+                <div class="card-title d-flex align-items-center pt-3 mx-3">
+                    <span class="fw-bold fs-5"> {{ project.projectName }}</span>
+                </div>
+                <div class="card-body ">
+                    <div class="row d-flex">
+                        <div class="col">
+                            <div mat-card-avatar class="project-image">
+                                <img [src]="project.imageUrl" alt="Project Image" style="height: 200px;">
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <span>{{ project.description }}</span>
+                            <p class="text-primary ">{{project.link}}</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="projects && projects.length === 0">
+        No projects found.
+    </div>
+
+    <button mat-fab class="bg-primary rounded-5 p-3 border-0 position-absolute end-0 bottom-0" color="warn"
+        (click)="openDialog()">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>

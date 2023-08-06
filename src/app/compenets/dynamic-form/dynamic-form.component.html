@@ -1,0 +1,131 @@
+<div class="container">
+    <h1 mat-dialog-title>Add {{data}} </h1>
+    <div mat-dialog-content>
+        <ng-container *ngIf="data=='Project'">
+            <form [formGroup]=" projectForm" (ngSubmit)="upload()" class="d-flex flex-column ">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Project Name</mat-label>
+                    <input matInput formControlName="projectName" required>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput formControlName="description" required></textarea>
+                </mat-form-field>
+                <div class="form-field">
+                    <label for="description">Image</label>
+                    <div class="custom-file-input">
+                        <input type="file" id="description" name="description" (change)="onFileSelected($event)"
+                            accept="image/*">
+                        <label for="description">Choose Image</label>
+                    </div>
+                </div>
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Link</mat-label>
+                    <input matInput formControlName="link" required>
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" type="submit">Submit</button>
+            </form>
+        </ng-container>
+        <ng-container *ngIf="data=='Servies'">
+            <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
+                <div>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Icon Name</mat-label>
+                        <input matInput type="text" formControlName="iconName" />
+                        <mat-error *ngIf="serviceForm.get('iconName')?.invalid && serviceForm.get('iconName')?.touched">
+                            Icon Name is required.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Service Name</mat-label>
+                        <input matInput type="text" formControlName="serviceName" />
+                        <mat-error
+                            *ngIf="serviceForm.get('serviceName')?.invalid && serviceForm.get('serviceName')?.touched">
+                            Service Name is required.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Service Description</mat-label>
+                        <textarea matInput formControlName="serviceDescription"></textarea>
+                        <mat-error
+                            *ngIf="serviceForm.get('serviceDescription')?.invalid && serviceForm.get('serviceDescription')?.touched">
+                            Service Description is required.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <button mat-raised-button color="primary" type="submit">Submit</button>
+            </form>
+        </ng-container>
+        <ng-container *ngIf="data=='Skills'">
+            <form [formGroup]="skillsForms" (ngSubmit)="addSkills()">
+
+                <div class="form-field">
+                    <label for="description">Image</label>
+                    <div class="custom-file-input">
+                        <input type="file" id="description" name="description" (change)="onFileSelected($event)"
+                            accept="image/*">
+                        <label for="description">Choose Image</label>
+                    </div>
+                </div>
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Service Name</mat-label>
+                    <input matInput type="text" formControlName="skilleName" />
+                    <mat-error *ngIf="skillsForms.get('skilleName')?.invalid && skillsForms.get('skilleName')?.touched">
+                        Service Name is required.
+                    </mat-error>
+                </mat-form-field>
+                <div>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Starting</mat-label>
+                        <input matInput [matDatepicker]="startingDatePicker" formControlName="expirationDate" />
+                        <mat-datepicker-toggle matSuffix [for]="startingDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startingDatePicker></mat-datepicker>
+                        <mat-error
+                            *ngIf="skillsForms.get('expirationDate')?.invalid && skillsForms.get('expirationDate')?.touched">
+                            Starting Date is required.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Ending</mat-label>
+                        <input matInput [matDatepicker]="endingDatePicker" formControlName="someDate" />
+                        <mat-datepicker-toggle matSuffix [for]="endingDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endingDatePicker></mat-datepicker>
+                        <mat-error *ngIf="skillsForms.get('someDate')?.invalid && skillsForms.get('someDate')?.touched">
+                            Ending Date is required.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <button mat-raised-button color="primary" type="submit">Submit</button>
+            </form>
+        </ng-container>
+        <ng-container *ngIf="data=='Clients'">
+            <form [formGroup]="clients" (ngSubmit)="Clients()">
+                <div class="form-field">
+                    <label for="Client">Image</label>
+                    <div class="custom-file-input">
+                        <input type="file" id="Client" name="Client" (change)="onFileSelected($event)" accept="image/*">
+                        <label for="Client">Choose Image</label>
+                    </div>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Client Name</mat-label>
+                        <input matInput type="text" formControlName="formName" />
+                    </mat-form-field>
+                </div>
+
+                <button mat-raised-button color="primary" type="submit">Submit</button>
+            </form>
+        </ng-container>
+    </div>
+</div>
