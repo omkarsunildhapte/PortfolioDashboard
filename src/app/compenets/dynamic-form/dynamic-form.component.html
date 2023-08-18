@@ -1,7 +1,7 @@
 <div class="container">
-    <h1 mat-dialog-title>Add {{data}} </h1>
+    <h1 mat-dialog-title>Add {{data.title}} </h1>
     <div mat-dialog-content>
-        <ng-container *ngIf="data=='Project'">
+        <ng-container *ngIf="data.title=='Project'">
             <form [formGroup]=" projectForm" (ngSubmit)="upload()" class="d-flex flex-column ">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Project Name</mat-label>
@@ -28,7 +28,7 @@
                 <button mat-raised-button color="primary" type="submit">Submit</button>
             </form>
         </ng-container>
-        <ng-container *ngIf="data=='Servies'">
+        <ng-container *ngIf="data.title=='Servies'">
             <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
                 <div>
                     <mat-form-field appearance="outline" class="w-100">
@@ -64,7 +64,7 @@
                 <button mat-raised-button color="primary" type="submit">Submit</button>
             </form>
         </ng-container>
-        <ng-container *ngIf="data=='Skills'">
+        <ng-container *ngIf="data.title=='Skills'">
             <form [formGroup]="skillsForms" (ngSubmit)="addSkills()">
 
                 <div class="form-field">
@@ -108,7 +108,7 @@
                 <button mat-raised-button color="primary" type="submit">Submit</button>
             </form>
         </ng-container>
-        <ng-container *ngIf="data=='Clients'">
+        <ng-container *ngIf="data.title=='Clients'">
             <form [formGroup]="clients" (ngSubmit)="Clients()">
                 <div class="form-field">
                     <label for="Client">Image</label>

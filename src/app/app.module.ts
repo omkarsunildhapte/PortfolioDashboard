@@ -27,6 +27,7 @@ import { CertifictedComponent } from './compenets/certificted/certificted.compon
 import { MyselfComponent } from './compenets/myself/myself.component';
 import { MyDatePipe } from './shared/pipes/date.pipe';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { AlertComponent } from './compenets/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ClientsComponent,
     MyDatePipe,
     CertifictedComponent,
-    MyselfComponent
+    MyselfComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,27 +9,59 @@ import { CurdService } from 'src/app/shared/curd/curd.service';
   styleUrls: ['./clients.component.scss']
 })
 export class ClientsComponent {
-  client: any
+  client: any;
   constructor(public dialog: MatDialog, private curdService: CurdService) { }
   ngOnInit() {
     this.getProjects();
   }
 
   getProjects() {
-    debugger
+
     const collectionName = 'clients';
     this.curdService.getProjects(collectionName).subscribe((Projects: any) => {
       this.client = Projects
     });
   }
-  openDialog(): void {
+  add(): void {
     const dialogRef = this.dialog.open(DynamicFormComponent, {
       width: "800px",
-      data: 'Clients'
+      data: {
+        title: 'Clients'
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      const collectionName = 'clients';
+      const filePath = `clients/${result.file.name}`;
+      const task = this.curdService.uploadFile(collectionName, filePath, result.file);
+      task.snapshotChanges().toPromise()
+        .then((snapshot: any) => snapshot.ref.getDownloadURL())
+        .then(downloadURL => {
+          result.client.imageUrl = downloadURL
+          const formValues = result.client;
+          return this.curdService.addProject(collectionName, formValues);
+        })
+        .then(() => {
+          console.log('Project added successfully with image URL');
+        })
+        .catch(error => {
+          console.error('Error uploading and adding project:', error);
+        });
     });
   }
+  edit(item: any) {
+
+    const dialogRef = this.dialog.open(DynamicFormComponent, {
+      width: "800px",
+      data: {
+        title: 'Clients',
+        editValue: item
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
 }

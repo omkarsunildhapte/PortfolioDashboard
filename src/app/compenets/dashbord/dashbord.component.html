@@ -1,29 +1,39 @@
-<div class="container">
-    <app-header></app-header>
-    <table mat-table [dataSource]="dataSource">
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
-        </ng-container>
-        <ng-container matColumnDef="companyName">
-            <th mat-header-cell *matHeaderCellDef> Company Name </th>
-            <td mat-cell *matCellDef="let element"> {{ element.companyName }} </td>
-        </ng-container>
-        <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef> Email </th>
-            <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
-        </ng-container>
+<div class="bg-dark">
+    <div class="container">
 
-        <ng-container matColumnDef="phoneNumber">
-            <th mat-header-cell *matHeaderCellDef> Phone Number </th>
-            <td mat-cell *matCellDef="let element"> {{ element.phoneNumber }} </td>
-        </ng-container>
-        <ng-container matColumnDef="message">
-            <th mat-header-cell *matHeaderCellDef> Message </th>
-            <td mat-cell *matCellDef="let element"> {{ element.message }} </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+        <div class="row">
+            <div class="col">
+                <img class="w2f w-100" src="./../../../assets/background.jpg" alt="">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Name </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="companyName">
+                        <th mat-header-cell *matHeaderCellDef> Company Name </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.companyName }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef> Email </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
+                    </ng-container>
 
+                    <ng-container matColumnDef="phoneNumber">
+                        <th mat-header-cell *matHeaderCellDef> Phone Number </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.phoneNumber }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="message">
+                        <th mat-header-cell *matHeaderCellDef> Message </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.message }} </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>

@@ -10,21 +10,36 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class SkillsComponent {
   skills!: any;
-  constructor(public dialog: MatDialog, private firebaseService: CurdService) { this.getProjects() }
+  collectionName = 'skills';
+  constructor(public dialog: MatDialog, private curdService: CurdService) { this.getProjects() }
   getProjects() {
-    const collectionName = 'skills';
-    this.firebaseService.getProjects(collectionName).subscribe((Projects: any) => {
+    this.curdService.getProjects(this.collectionName).subscribe((Projects: any) => {
       this.skills = Projects;
     });
   }
-
   openDialog(): void {
     const dialogRef = this.dialog.open(DynamicFormComponent, {
       width: "800px",
-      data: 'Skills'
+      data: {
+        title: 'Skills'
+      }
     });
-
     dialogRef.afterClosed().subscribe(result => {
+      const filePath = `skills/${result.file.name}`;
+      const task = this.curdService.uploadFile(this.collectionName, filePath, result.file);
+      task.snapshotChanges().toPromise()
+        .then((snapshot: any) => snapshot.ref.getDownloadURL())
+        .then(downloadURL => {
+          result.skill.imageUrl = downloadURL
+          const formValues = result.skill;
+          return this.curdService.addProject(this.collectionName, formValues);
+        })
+        .then(() => {
+          console.log('Project added successfully with image URL');
+        })
+        .catch(error => {
+          console.error('Error uploading and adding project:', error);
+        });
       console.log('The dialog was closed');
     });
   }

@@ -27,7 +27,7 @@ export class MyselfComponent {
   }
 
   getProjects() {
-    debugger
+
     const collectionName = 'mySelf';
     this.curdService.getProjects(collectionName).subscribe((Projects: any) => {
       this.mySelf = Projects

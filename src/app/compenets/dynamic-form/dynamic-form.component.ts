@@ -15,7 +15,7 @@ export class DynamicFormComponent {
   clients!: FormGroup;
   certificates!: FormGroup;
   selectedFile: File | null = null;
-
+  Id: any
   constructor(
     private fb: FormBuilder,
     private curdService: CurdService,
@@ -33,7 +33,8 @@ export class DynamicFormComponent {
       description: ['', Validators.required],
       link: ['', Validators.required],
       imageUrl: ['']
-    }); this.skillsForms = this.fb.group({
+    });
+    this.skillsForms = this.fb.group({
       skilleName: ['', Validators.required],
       imageUrl: [''],
       expirationDate: [null, Validators.required],
@@ -44,8 +45,8 @@ export class DynamicFormComponent {
       imageUrl: ['']
     });
     this.certificates = this.fb.group({
-
     })
+    this.patchvalue()
   }
   onSubmit() {
     if (this.serviceForm.valid) {
@@ -56,112 +57,70 @@ export class DynamicFormComponent {
     }
   }
   Clients() {
-
     if (!this.clients.valid || !this.selectedFile) {
       return;
     }
-    debugger
-    this.dialogRef.close();
-    const collectionName = 'clients';
-    const filePath = `clients/${this.selectedFile.name}`;
-    const task = this.curdService.uploadFile(collectionName, filePath, this.selectedFile);
-    task.snapshotChanges().toPromise()
-      .then((snapshot: any) => snapshot.ref.getDownloadURL())
-      .then(downloadURL => {
-        this.clients.patchValue({ imageUrl: downloadURL });
-        const formValues = this.clients.value;
-        const newProject: any = {
-          ...formValues,
-        };
-        return this.curdService.addProject(collectionName, newProject);
-      })
-      .then(() => {
-        console.log('Project added successfully with image URL');
-      })
-      .catch(error => {
-        console.error('Error uploading and adding project:', error);
-      });
+    const data = { client: this.clients.value, file: this.selectedFile }
+    this.dialogRef.close(data);
   }
   Certificates() {
     if (!this.certificates.valid || !this.selectedFile) {
       return;
     }
-    debugger
-    this.dialogRef.close();
-    const collectionName = 'certificates';
-    const filePath = `certificates/${this.selectedFile.name}`;
-    const task = this.curdService.uploadFile(collectionName, filePath, this.selectedFile);
-    task.snapshotChanges().toPromise()
-      .then((snapshot: any) => snapshot.ref.getDownloadURL())
-      .then(downloadURL => {
-        this.certificates.patchValue({ image: downloadURL });
-        const formValues = this.certificates.value;
-        const newProject: any = {
-          ...formValues,
-        };
-        return this.curdService.addProject(collectionName, newProject);
-      })
-      .then(() => {
-        console.log('Project added successfully with image URL');
-      })
-      .catch(error => {
-        console.error('Error uploading and adding project:', error);
-      });
+    const data = { certificate: this.certificates.value, file: this.selectedFile }
+    this.dialogRef.close(data);
   }
   addSkills() {
     if (!this.skillsForms.valid || !this.selectedFile) {
       return;
     }
-    this.dialogRef.close();
-    const collectionName = 'skills';
-    const filePath = `skills/${this.selectedFile.name}`;
-    const task = this.curdService.uploadFile(collectionName, filePath, this.selectedFile);
-    task.snapshotChanges().toPromise()
-      .then((snapshot: any) => snapshot.ref.getDownloadURL())
-      .then(downloadURL => {
-        this.skillsForms.patchValue({ imageUrl: downloadURL });
-        const formValues = this.skillsForms.value;
-        const newProject: any = {
-          ...formValues,
-        };
-        return this.curdService.addProject(collectionName, newProject);
-      })
-      .then(() => {
-        console.log('Project added successfully with image URL');
-      })
-      .catch(error => {
-        console.error('Error uploading and adding project:', error);
-      });
+    const data = { skill: this.skillsForms.value, file: this.selectedFile }
+    this.dialogRef.close(data);
   }
-
   onFileSelected(event: any) {
-    debugger
     this.selectedFile = event.target.files[0];
   }
-
   upload() {
+    debugger
     if (!this.projectForm.valid || !this.selectedFile) {
       return;
     }
-    this.dialogRef.close();
-    const collectionName = 'projects';
-    const filePath = `projects/${this.selectedFile.name}`;
-    const task = this.curdService.uploadFile(collectionName, filePath, this.selectedFile);
-    task.snapshotChanges().toPromise()
-      .then((snapshot: any) => snapshot.ref.getDownloadURL())
-      .then(downloadURL => {
-        this.projectForm.patchValue({ imageUrl: downloadURL });
-        const formValues = this.projectForm.value;
-        const newProject: any = {
-          ...formValues,
-        };
-        return this.curdService.addProject(collectionName, newProject);
-      })
-      .then(() => {
-        console.log('Project added successfully with image URL');
-      })
-      .catch(error => {
-        console.error('Error uploading and adding project:', error);
+    const data = { project: this.projectForm.value, file: this.selectedFile, id: this.Id }
+    this.dialogRef.close(data);
+  }
+  patchvalue() {
+    debugger
+    if (this.data.title == 'Servies') {
+      this.serviceForm.patchValue({
+        iconName: this.data.iconName,
+        serviceName: this.data.serviceName,
+        serviceDescription: this.data.serviceDescription
       });
+    }
+    else if (this.data.title == 'Project') {
+      this.projectForm.patchValue({
+        projectName: this.data.data.projectName,
+        description: this.data.data.description,
+        link: this.data.data.link,
+      });
+      this.selectedFile = this.data.data.imageUrl
+      this.Id = this.data.data.id
+    }
+    else if (this.data.title == 'Skills') {
+      this.skillsForms.patchValue({
+        skilleName: this.data.skilleName,
+        imageUrl: this.data.imageUrl,
+        expirationDate: this.data.expirationDate,
+        someDate: this.data.someDate
+      });
+    }
+    else if (this.data.title == 'Clients') {
+      this.clients.patchValue({
+        formName: this.data.editValue.formName,
+        imageUrl: this.data.editValue.imageUrl
+      });
+    }
+    this.certificates.patchValue({
+    });
   }
 }
