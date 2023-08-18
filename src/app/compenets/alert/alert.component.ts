@@ -12,7 +12,6 @@ export class AlertComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
   ngOnInit() {
-    debugger
   }
   cancel() {
     this.dialogRef.close();

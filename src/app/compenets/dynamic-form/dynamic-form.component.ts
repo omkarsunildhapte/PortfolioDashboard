@@ -81,7 +81,6 @@ export class DynamicFormComponent {
     this.selectedFile = event.target.files[0];
   }
   upload() {
-    debugger
     if (!this.projectForm.valid || !this.selectedFile) {
       return;
     }
@@ -89,7 +88,6 @@ export class DynamicFormComponent {
     this.dialogRef.close(data);
   }
   patchvalue() {
-    debugger
     if (this.data.title == 'Servies') {
       this.serviceForm.patchValue({
         iconName: this.data.iconName,

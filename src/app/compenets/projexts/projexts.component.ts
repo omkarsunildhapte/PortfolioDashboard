@@ -36,7 +36,7 @@ export class ProjextsComponent {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      debugger
+
       this.curdService.deleteProject(this.collectionName, result)
     })
   }
@@ -65,7 +65,7 @@ export class ProjextsComponent {
     });
   }
   editProject(project: any) {
-    debugger
+
     this.curdService.editProjects(this.collectionName, project.id, project.project, project.file)
   }
   addProjects(result: any) {
