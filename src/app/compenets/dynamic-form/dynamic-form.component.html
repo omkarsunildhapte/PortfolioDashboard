@@ -1,5 +1,8 @@
 <div class="container">
-    <h1 mat-dialog-title>Add {{data.title}} </h1>
+    <div mat-dialog-title class="d-flex justify-content-between">
+        <span>Add {{data.title}}</span>
+        <button mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
+    </div>
     <div mat-dialog-content>
         <ng-container *ngIf="data.title=='Project'">
             <form [formGroup]=" projectForm" (ngSubmit)="upload()" class="d-flex flex-column ">

@@ -57,10 +57,11 @@ export class DynamicFormComponent {
     }
   }
   Clients() {
+    debugger
     if (!this.clients.valid || !this.selectedFile) {
       return;
     }
-    const data = { client: this.clients.value, file: this.selectedFile }
+    const data = { client: this.clients.value, file: this.selectedFile, id: this.Id }
     this.dialogRef.close(data);
   }
   Certificates() {
@@ -88,37 +89,45 @@ export class DynamicFormComponent {
     this.dialogRef.close(data);
   }
   patchvalue() {
-    if (this.data.title == 'Servies') {
-      this.serviceForm.patchValue({
-        iconName: this.data.iconName,
-        serviceName: this.data.serviceName,
-        serviceDescription: this.data.serviceDescription
+    debugger
+    if (this.data.data) {
+      if (this.data.title == 'Servies') {
+        this.serviceForm.patchValue({
+          iconName: this.data.iconName,
+          serviceName: this.data.serviceName,
+          serviceDescription: this.data.serviceDescription
+        });
+      }
+      else if (this.data.title == 'Project') {
+        this.projectForm.patchValue({
+          projectName: this.data.data.projectName,
+          description: this.data.data.description,
+          link: this.data.data.link,
+        });
+        this.selectedFile = this.data.data.imageUrl
+        this.Id = this.data.data.id
+      }
+      else if (this.data.title == 'Skills') {
+        this.skillsForms.patchValue({
+          skilleName: this.data.skilleName,
+          imageUrl: this.data.imageUrl,
+          expirationDate: this.data.expirationDate,
+          someDate: this.data.someDate
+        });
+      }
+      else if (this.data.title == 'Clients') {
+        this.clients.patchValue({
+          formName: this.data.data.formName,
+          imageUrl: this.data.data.imageUrl
+        });
+        this.selectedFile = this.data.data.imageUrl;
+        this.Id = this.data.data.id
+      }
+      this.certificates.patchValue({
       });
     }
-    else if (this.data.title == 'Project') {
-      this.projectForm.patchValue({
-        projectName: this.data.data.projectName,
-        description: this.data.data.description,
-        link: this.data.data.link,
-      });
-      this.selectedFile = this.data.data.imageUrl
-      this.Id = this.data.data.id
-    }
-    else if (this.data.title == 'Skills') {
-      this.skillsForms.patchValue({
-        skilleName: this.data.skilleName,
-        imageUrl: this.data.imageUrl,
-        expirationDate: this.data.expirationDate,
-        someDate: this.data.someDate
-      });
-    }
-    else if (this.data.title == 'Clients') {
-      this.clients.patchValue({
-        formName: this.data.editValue.formName,
-        imageUrl: this.data.editValue.imageUrl
-      });
-    }
-    this.certificates.patchValue({
-    });
+  }
+  close() {
+    this.dialogRef.close()
   }
 }

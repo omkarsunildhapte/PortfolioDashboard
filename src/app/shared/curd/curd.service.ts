@@ -18,18 +18,15 @@ export class CurdService {
     this.projects$ = this.projectsCollection.valueChanges({ idField: 'id' });
     return this.projects$;
   }
-
   addProject(collectionName: string, project: any): Promise<DocumentReference<any>> {
     const collection = this.afs.collection<any>(collectionName);
     return collection.add(project);
   }
-
   deleteProject(collectionName: string, projectId: string): Promise<void> {
     const collection = this.afs.collection<any>(collectionName);
     const projectDoc = collection.doc(projectId);
     return projectDoc.delete();
   }
-
   uploadFile(collectionName: string, filePath: string, file: File): AngularFireUploadTask {
     const collection = this.afs.collection<any>(collectionName);
     const task = this.storage.upload(filePath, file);
@@ -38,7 +35,6 @@ export class CurdService {
   editProjectToImg(collectionName: string, projectId: string, updatedProject: any): Promise<string> {
     const collection = this.afs.collection<any>(collectionName);
     const projectDoc = collection.doc(projectId);
-
     return projectDoc.update(updatedProject)
       .then(() => {
         console.log('Project edited successfully');
