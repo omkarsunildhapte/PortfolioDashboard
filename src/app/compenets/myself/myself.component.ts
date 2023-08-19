@@ -10,7 +10,9 @@ import { CurdService } from 'src/app/shared/curd/curd.service';
 export class MyselfComponent {
   mySelfForm: FormGroup;
   selectedFile: File | null = null;
+  collectionName = 'mySelf';
   mySelf: any
+  id: any;
   constructor(private fb: FormBuilder,
     private curdService: CurdService,
   ) {
@@ -25,11 +27,8 @@ export class MyselfComponent {
   ngOnInit() {
     this.getProjects();
   }
-
   getProjects() {
-
-    const collectionName = 'mySelf';
-    this.curdService.getProjects(collectionName).subscribe((Projects: any) => {
+    this.curdService.getProjects(this.collectionName).subscribe((Projects: any) => {
       this.mySelf = Projects
     });
   }
@@ -37,9 +36,8 @@ export class MyselfComponent {
     if (!this.mySelfForm.valid || !this.selectedFile) {
       return;
     }
-    const collectionName = 'mySelf';
-    const filePath = `mySelf/${this.selectedFile.name}`;
-    const task = this.curdService.uploadFile(collectionName, filePath, this.selectedFile);
+    const filePath = `${this.collectionName}/${this.selectedFile.name}`;
+    const task = this.curdService.uploadFile(this.collectionName, filePath, this.selectedFile);
     task.snapshotChanges().toPromise()
       .then((snapshot: any) => snapshot.ref.getDownloadURL())
       .then(downloadURL => {
@@ -49,7 +47,7 @@ export class MyselfComponent {
           ...formValues,
         };
         this.mySelfForm.reset();
-        return this.curdService.addProject(collectionName, newProject);
+        return this.curdService.addProject(this.collectionName, newProject);
       })
       .then(() => {
         console.log('Project added successfully with image URL');
@@ -62,5 +60,31 @@ export class MyselfComponent {
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
   }
+  edit() {
+    this.mySelfForm.patchValue({
+      name: this.mySelf[0].name,
+      quests: this.mySelf[0].quests,
+      description: this.mySelf[0].description,
+      jobTitle: this.mySelf[0].jobTitle,
+    });
+    this.id = this.mySelf[0].id;
+    this.selectedFile = this.mySelf[0].imageUrl
+  }
+  editform() {
 
+    if (this.mySelfForm.valid && this.selectedFile) {
+      if (this.selectedFile == this.mySelf[0].imageUrl) {
+        this.mySelfForm.patchValue({ imageUrl: this.selectedFile });
+        this.curdService.editProjectToImg(this.collectionName, this.id, this.mySelfForm.value);
+      }
+      else {
+        this.curdService.deleteImageByUrl(this.mySelf[0].imageUrl);
+        this.curdService.editProjects(this.collectionName, this.id, this.mySelfForm.value, this.selectedFile);
+      }
+      this.mySelfForm.reset();
+    } else {
+      console.log("something went wrong");
+
+    }
+  }
 }
