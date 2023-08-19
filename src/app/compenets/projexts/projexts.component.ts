@@ -41,6 +41,7 @@ export class ProjextsComponent {
     })
   }
   edit(data: any): void {
+    const file = data.imageUrl
     const dialogRef = this.dialog.open(DynamicFormComponent, {
       width: "800px",
       data: {
@@ -49,7 +50,16 @@ export class ProjextsComponent {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.editProject(result)
+      if (result) {
+        if (file == result.file) {
+          result.project.imageUrl = file
+          this.curdService.editProjectToImg(this.collectionName, result.id, result.project)
+        }
+        else {
+          this.curdService.deleteImageByUrl(file)
+          this.curdService.editProjects(this.collectionName, result.id, result.project, result.file)
+        }
+      }
     })
   }
   add(): void {
@@ -61,28 +71,23 @@ export class ProjextsComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.addProjects(result)
+      if (result) {
+        const filePath = `${this.collectionName}/${result.file.name}`;
+        const task = this.curdService.uploadFile(this.collectionName, filePath, result.file);
+        task.snapshotChanges().toPromise()
+          .then((snapshot: any) => snapshot.ref.getDownloadURL())
+          .then(downloadURL => {
+            result.project.imageUrl = downloadURL
+            const formValues = result.project;
+            return this.curdService.addProject(this.collectionName, formValues);
+          })
+          .then(() => {
+            console.log('Project added successfully with image URL');
+          })
+          .catch(error => {
+            console.error('Error uploading and adding project:', error);
+          });
+      }
     });
-  }
-  editProject(project: any) {
-
-    this.curdService.editProjects(this.collectionName, project.id, project.project, project.file)
-  }
-  addProjects(result: any) {
-    const filePath = `projects/${result.file.name}`;
-    const task = this.curdService.uploadFile(this.collectionName, filePath, result.file);
-    task.snapshotChanges().toPromise()
-      .then((snapshot: any) => snapshot.ref.getDownloadURL())
-      .then(downloadURL => {
-        result.project.imageUrl = downloadURL
-        const formValues = result.project;
-        return this.curdService.addProject(this.collectionName, formValues);
-      })
-      .then(() => {
-        console.log('Project added successfully with image URL');
-      })
-      .catch(error => {
-        console.error('Error uploading and adding project:', error);
-      });
   }
 }

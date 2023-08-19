@@ -57,7 +57,7 @@ export class DynamicFormComponent {
     }
   }
   Clients() {
-    debugger
+
     if (!this.clients.valid || !this.selectedFile) {
       return;
     }
@@ -89,7 +89,7 @@ export class DynamicFormComponent {
     this.dialogRef.close(data);
   }
   patchvalue() {
-    debugger
+
     if (this.data.data) {
       if (this.data.title == 'Servies') {
         this.serviceForm.patchValue({

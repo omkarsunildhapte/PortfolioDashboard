@@ -59,12 +59,11 @@ export class ClientsComponent {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      debugger
+
       if (filename == result.file) {
         this.curdService.editProjectToImg(this.collectionName, result.id, result.client)
       }
       else {
-        debugger
         this.curdService.deleteImageByUrl(filename);
         this.curdService.editProjects(this.collectionName, result.id, result.client, result.file)
       }
@@ -79,8 +78,10 @@ export class ClientsComponent {
       }
     })
     dialogRef.afterClosed().subscribe(result => {
-      this.curdService.deleteProject(this.collectionName, result)
-      this.curdService.deleteImageByUrl(client.imageUrl)
+      if (result) {
+        this.curdService.deleteProject(this.collectionName, result)
+        this.curdService.deleteImageByUrl(client.imageUrl)
+      }
     })
   }
 }
