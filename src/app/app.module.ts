@@ -28,7 +28,7 @@ import { MyselfComponent } from './compenets/myself/myself.component';
 import { MyDatePipe } from './shared/pipes/date.pipe';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AlertComponent } from './compenets/alert/alert.component';
-
+import { MatCheckboxModule } from '@angular/material/checkbox';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +60,8 @@ import { AlertComponent } from './compenets/alert/alert.component';
     MatTableModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -75,7 +75,8 @@
                     <div class="custom-file-input">
                         <input type="file" id="description" name="description" (change)="onFileSelected($event)"
                             accept="image/*">
-                        <label for="description">Choose Image</label>
+                        <label for="description">Choose Image </label>
+                        <span>{{selectedFile ? selectedFile.name :''}}</span>
                     </div>
                 </div>
                 <mat-form-field appearance="outline" class="w-100">
@@ -85,29 +86,29 @@
                         Service Name is required.
                     </mat-error>
                 </mat-form-field>
-                <div>
-                    <mat-form-field class="w-100" appearance="outline">
-                        <mat-label>Starting</mat-label>
-                        <input matInput [matDatepicker]="startingDatePicker" formControlName="expirationDate" />
-                        <mat-datepicker-toggle matSuffix [for]="startingDatePicker"></mat-datepicker-toggle>
-                        <mat-datepicker #startingDatePicker></mat-datepicker>
-                        <mat-error
-                            *ngIf="skillsForms.get('expirationDate')?.invalid && skillsForms.get('expirationDate')?.touched">
-                            Starting Date is required.
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-                <div>
-                    <mat-form-field class="w-100" appearance="outline">
-                        <mat-label>Ending</mat-label>
-                        <input matInput [matDatepicker]="endingDatePicker" formControlName="someDate" />
-                        <mat-datepicker-toggle matSuffix [for]="endingDatePicker"></mat-datepicker-toggle>
-                        <mat-datepicker #endingDatePicker></mat-datepicker>
-                        <mat-error *ngIf="skillsForms.get('someDate')?.invalid && skillsForms.get('someDate')?.touched">
-                            Ending Date is required.
-                        </mat-error>
-                    </mat-form-field>
-                </div>
+
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Starting Date</mat-label>
+                    <input matInput [matDatepicker]="startingDatePicker" formControlName="expirationDate" />
+                    <mat-datepicker-toggle matSuffix [for]="startingDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startingDatePicker></mat-datepicker>
+                    <mat-error
+                        *ngIf="skillsForms.get('expirationDate')?.invalid && skillsForms.get('expirationDate')?.touched">
+                        Starting Date is required.
+                    </mat-error>
+                </mat-form-field>
+                <mat-checkbox (change)="enddate=!enddate" color="primary">Currently working</mat-checkbox>
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Ending</mat-label>
+                    <input matInput [matDatepicker]="endingDatePicker" formControlName="someDate"
+                        [disabled]="enddate" />
+                    <mat-datepicker-toggle matSuffix [for]="endingDatePicker"
+                        [disabled]="enddate"></mat-datepicker-toggle>
+                    <mat-datepicker #endingDatePicker></mat-datepicker>
+                    <mat-error *ngIf="skillsForms.get('someDate')?.invalid && skillsForms.get('someDate')?.touched">
+                        Ending Date is required.
+                    </mat-error>
+                </mat-form-field>
                 <button mat-raised-button color="primary" type="submit">Submit</button>
             </form>
         </ng-container>

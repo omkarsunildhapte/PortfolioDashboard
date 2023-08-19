@@ -7,12 +7,10 @@ import { Timestamp } from 'firebase/firestore';
 })
 export class MyDatePipe implements PipeTransform {
   transform(value: any): any {
-    if (value instanceof Timestamp) {
-      const date = value.toDate();
+    if (value) {
       const datePipe = new DatePipe('en-US');
-      return datePipe.transform(date, 'MM-yyyy');
+      return datePipe.transform(value, 'MM/yyyy');
     }
-
-    return value;
+    return '';
   }
 }

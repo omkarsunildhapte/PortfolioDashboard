@@ -15,8 +15,10 @@
                                     <p>To</p>
                                     <p>{{skill.someDate | date }}</p>
                                     <div>
-                                        <button mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
-                                        <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
+                                        <button mat-icon-button color="primary"
+                                            (click)="edit(skill)"><mat-icon>edit</mat-icon></button>
+                                        <button mat-icon-button color="warn"
+                                            (click)="delete(skill)"><mat-icon>delete</mat-icon></button>
                                     </div>
                                 </div>
                             </div>
@@ -31,7 +33,7 @@
     </div>
 </div>
 <div class="end-0 bottom-0 position-absolute">
-    <button mat-fab color="warn" class="" (click)="openDialog()">
+    <button mat-fab color="warn" class="" (click)="add()">
         <mat-icon>add</mat-icon>
     </button>
 </div>

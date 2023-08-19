@@ -2,7 +2,6 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CurdService } from '../../shared/curd/curd.service';
-
 @Component({
   selector: 'app-dynamic-form',
   templateUrl: './dynamic-form.component.html',
@@ -15,7 +14,8 @@ export class DynamicFormComponent {
   clients!: FormGroup;
   certificates!: FormGroup;
   selectedFile: File | null = null;
-  Id: any
+  Id: any;
+  enddate = false;
   constructor(
     private fb: FormBuilder,
     private curdService: CurdService,
@@ -37,8 +37,8 @@ export class DynamicFormComponent {
     this.skillsForms = this.fb.group({
       skilleName: ['', Validators.required],
       imageUrl: [''],
-      expirationDate: [null, Validators.required],
-      someDate: [null, Validators.required]
+      expirationDate: ['', Validators.required],
+      someDate: ['',],
     });
     this.clients = this.fb.group({
       formName: ['', Validators.required],
@@ -46,7 +46,6 @@ export class DynamicFormComponent {
     });
     this.certificates = this.fb.group({
     })
-    this.patchvalue()
   }
   onSubmit() {
     if (this.serviceForm.valid) {
@@ -88,8 +87,9 @@ export class DynamicFormComponent {
     const data = { project: this.projectForm.value, file: this.selectedFile, id: this.Id }
     this.dialogRef.close(data);
   }
-  patchvalue() {
 
+
+  patchvalue() {
     if (this.data.data) {
       if (this.data.title == 'Servies') {
         this.serviceForm.patchValue({
@@ -108,12 +108,15 @@ export class DynamicFormComponent {
         this.Id = this.data.data.id
       }
       else if (this.data.title == 'Skills') {
+        const expirationDate = new Date(this.data.data.expirationDate);
+        const someDate = new Date(this.data.data.someDate);
         this.skillsForms.patchValue({
-          skilleName: this.data.skilleName,
-          imageUrl: this.data.imageUrl,
-          expirationDate: this.data.expirationDate,
-          someDate: this.data.someDate
+          skilleName: this.data.data.skilleName,
+          expirationDate: expirationDate,
+          someDate: someDate
         });
+        this.selectedFile = this.data.data.imageUrl
+        this.Id = this.data.data.id
       }
       else if (this.data.title == 'Clients') {
         this.clients.patchValue({
