@@ -1,0 +1,95 @@
+<c-row ngPreserveWhitespaces>
+    <c-col xs="12">
+        <c-card class="mb-4">
+            <c-card-header>
+                <p class="d-flex gap-3">
+                    <strong>My Education</strong>
+                    <c-form-check>
+                        <input cFormCheckInput id="gridCheck" [formControl]="edit" name="gridCheck" type="checkbox" />
+                        <label cFormCheckLabel for="gridCheck">Edit Option</label>
+                    </c-form-check>
+                </p>
+            </c-card-header>
+            <c-card-body *ngIf="edit.value">
+                <form [formGroup]="myForm" cForm (ngSubmit)="submit()">
+                    <div class="row">
+                        <div class="mb-3 col-3">
+                            <label cLabel>Company Name</label>
+                            <input cFormControl formControlName="companyName" type="text" />
+                        </div>
+                        <div class="mb-3 col-3">
+                            <label cLabel>Starting Year</label>
+                            <input cFormControl formControlName="startingYear" type="date" />
+                        </div>
+                        <div class="mb-3 col-3">
+                            <label cLabel>Ending Year</label>
+                            <input cFormControl formControlName="endYear" type="date" />
+                        </div>
+                        <div class="mb-3 col-3">
+                            <label cLabel>Positon</label>
+                            <input cFormControl formControlName="mainTitle" type="text" />
+                        </div>
+                        <div class="mb-3 col-3">
+                            <label cLabel>Address</label>
+                            <input cFormControl formControlName="location" type="text" />
+                        </div>
+                        <div formArrayName="listshow" class="col-12">
+                            <label cLabel>Points in Company</label>
+                            <div class="col-9" *ngFor="let item of listshow.controls; let i = index">
+                                <div class="d-flex gap-3 mt-3">
+                                    <input cFormControl type="text" [formControlName]="i"
+                                        placeholder="List Item {{ i + 1 }}">
+                                    <button cButton type="button" (click)="removeListItem(i)">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 mt-4">
+                            <button cButton type="button" (click)="addListItem()">Add Item</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-11"></div>
+                        <div class="col-1">
+                            <button cButton color="primary" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </c-card-body>
+            <c-card-body *ngIf="!edit.value && educationData.length > 0">
+                <div class="bd-example">
+                    <ng-container *ngFor="let education of educationData">
+                        <dl class="row border-2 border">
+                            <dt class="col-sm-3">School Name</dt>
+                            <dd class="col-sm-9">{{ education.schoolName }}</dd>
+
+                            <dt class="col-sm-3">Course</dt>
+                            <dd class="col-sm-9">{{ education.course }}</dd>
+
+                            <dt class="col-sm-3">Starting Year</dt>
+                            <dd class="col-sm-9">{{ education.startingYear }}</dd>
+
+                            <dt class="col-sm-3">Ending Year</dt>
+                            <dd class="col-sm-9">{{ education.endYear }}</dd>
+
+                            <dt class="col-sm-3">Description</dt>
+                            <dd class="col-sm-9">{{ education.descriptionCourse }}</dd>
+
+                            <dt class="col-sm-3">Project Name</dt>
+                            <dd class="col-sm-9">{{ education.projectName }}</dd>
+
+                            <dt class="col-sm-3">Project Image</dt>
+                            <dd class="col-sm-9">{{ education.projectImg }}</dd>
+
+                            <dt class="col-sm-3">Project Description</dt>
+                            <dd class="col-sm-9">{{ education.projectDescription }}</dd>
+
+                            <dt class="col-sm-3">Participant Name</dt>
+                            <dd class="col-sm-9">{{ education.participantName }}</dd>
+                        </dl>
+                    </ng-container>
+                </div>
+            </c-card-body>
+        </c-card>
+    </c-col>
+
+</c-row>

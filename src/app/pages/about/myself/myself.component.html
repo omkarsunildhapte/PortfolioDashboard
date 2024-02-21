@@ -1,0 +1,157 @@
+<c-row ngPreserveWhitespaces>
+    <c-col xs="12">
+        <c-card class="mb-4">
+            <c-card-header>
+                <p class="d-flex gap-3">
+                    <strong>My Self</strong>
+                    <c-form-check>
+                        <input cFormCheckInput id="gridCheck" [formControl]="edit" name="gridCheck" type="checkbox" />
+                        <label cFormCheckLabel for="gridCheck">Edit Option</label>
+                    </c-form-check>
+                </p>
+            </c-card-header>
+            <c-card-body *ngIf="edit.value">
+                <form [formGroup]="myForm" cForm (ngSubmit)="submit()">
+                    <div class="row">
+                        <div class="col-6">
+                            <label cLabel>Profile Images</label>
+                            <input cFormControl formControlName="profileImages" type="file" name="profile" id="">
+                        </div>
+                        <div class="col-6">
+                            <label cLabel>Banner Images</label>
+                            <input cFormControl formControlName="bannerImages" type="file" name="profile" id="">
+                        </div>
+                        <div class="mb-3 col-3">
+                            <label cLabel>Title</label>
+                            <input cFormControl formControlName="titles" type="text" />
+                        </div>
+                        <div class="mb-3 col-3">
+                            <label cLabel>Name</label>
+                            <input cFormControl formControlName="name" type="text" />
+                        </div>
+                        <div class="mb-3 col-3">
+                            <label cLabel>Email address</label>
+                            <input cFormControl formControlName="email" placeholder="name@example.com" type="email" />
+                        </div>
+                        <div class="mb-3 col-3">
+                            <label cLabel>Birth Day</label>
+                            <input cFormControl formControlName="birthDay" type="date" />
+                        </div>
+                        <div class="mb-3 col-3">
+                            <label cLabel>Phone Number</label>
+                            <input cFormControl formControlName="phoneNumber" type="text" />
+                        </div>
+                        <div class="mb-3 col-3">
+                            <label cLabel>City</label>
+                            <input cFormControl formControlName="city" type="text" />
+                        </div>
+                        <div class="mb-3 col-3">
+                            <label cLabel>State</label>
+                            <input cFormControl formControlName="state" type="text" />
+                        </div>
+                        <div class="mb-3 col-3">
+                            <label cLabel>Country</label>
+                            <input cFormControl formControlName="country" type="text" />
+                        </div>
+                        <div class="mb-3 col-3">
+                            <label cLabel>Freelance Status</label>
+                            <select cSelect formControlName="freelanceStatus">
+                                <option>Open this select menu</option>
+                                <option value="">Open this select menu</option>
+                                <option value="Available">Available</option>
+                                <option value="Busy">Busy</option>
+                                <option value="Out of City">Out of City</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-3">
+                            <label cLabel>Job Status</label>
+                            <select cSelect formControlName="jobStatus">
+                                <option value="">Open this select menu</option>
+                                <option value="Available">Available</option>
+                                <option value="Busy">Busy</option>
+                                <option value="Out of City">Out of City</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3 col-3">
+                            <label cLabel for="exampleFormControlTextarea1">Main Roles</label>
+                            <input cFormControl formControlName="mainRoles" type="text" />
+                        </div>
+                        <div class="mb-3 col-3">
+                            <label cLabel for="exampleFormControlTextarea1">Degree</label>
+                            <input cFormControl formControlName="degree" type="text" />
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label cLabel for="exampleFormControlTextarea1">Quotes</label>
+                            <input cFormControl formControlName="quotes" type="text" />
+                        </div>
+                        <div class="mb-3">
+                            <label cLabel for="exampleFormControlTextarea1">About Information</label>
+                            <textarea cFormControl formControlName="aboutInformation" id="exampleFormControlTextarea1"
+                                rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label cLabel for="exampleFormControlTextarea1">Summary</label>
+                            <textarea cFormControl formControlName="summary" id="exampleFormControlTextarea1"
+                                rows="3"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-11">
+                        </div>
+                        <div class="col-1">
+                            <button cButton color="primary" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+
+            </c-card-body>
+            <c-card-body *ngIf="!edit.value">
+                <div class="bd-example">
+                    <dl class="row">
+                        <dt class="col-sm-3">Title</dt>
+                        <dd class="col-sm-9">{{ myselfData.titles }}</dd>
+                        <dt class="col-sm-3">Banner Images</dt>
+                        <dd class="col-sm-9">
+                            <img [src]="myselfData.bannerImages" alt="" style="width: 100px;" srcset="">
+                        </dd>
+                        <dt class="col-sm-3">Profile Images</dt>
+                        <dd class="col-sm-9">
+                            <img [src]="myselfData.profileImages" alt="" style="width: 100px;" srcset="">
+                        </dd>
+                        <dt class=" col-sm-3">Name</dt>
+                        <dd class="col-sm-9">{{ myselfData.name }}</dd>
+                        <dt class="col-sm-3">Email</dt>
+                        <dd class="col-sm-9">{{ myselfData.email }}</dd>
+                        <dt class="col-sm-3">Brith of Day</dt>
+                        <dd class="col-sm-9">{{ myselfData.birthDay }}</dd>
+                        <dt class="col-sm-3">Mobile Number</dt>
+                        <dd class="col-sm-9">{{ myselfData.phoneNumber }}</dd>
+                        <dt class="col-sm-3">City</dt>
+                        <dd class="col-sm-9">{{ myselfData.city }}</dd>
+                        <dt class="col-sm-3">State</dt>
+                        <dd class="col-sm-9">{{ myselfData.state }}</dd>
+                        <dt class="col-sm-3">Country</dt>
+                        <dd class="col-sm-9">{{ myselfData.country }}</dd>
+                        <dt class="col-sm-3">Freelancer Status</dt>
+                        <dd class="col-sm-9">{{ myselfData.freelanceStatus }}</dd>
+                        <dt class="col-sm-3">Job Status</dt>
+                        <dd class="col-sm-9">{{ myselfData.jobStatus }}</dd>
+                        <dt class="col-sm-3">Main Roles</dt>
+                        <dd class="col-sm-9">{{ myselfData.mainRoles }}</dd>
+                        <dt class="col-sm-3">Degree</dt>
+                        <dd class="col-sm-9">{{ myselfData.degree }}</dd>
+                        <dt class="col-sm-3">About Information</dt>
+                        <dd class="col-sm-9">{{ myselfData.aboutInformation }}</dd>
+                        <dt class="col-sm-3">Summary</dt>
+                        <dd class="col-sm-9">{{ myselfData.summary }}</dd>
+                        <dt class="col-sm-3">Quotes</dt>
+                        <dd class="col-sm-9">{{ myselfData.quotes }}</dd>
+                    </dl>
+                </div>
+            </c-card-body>
+        </c-card>
+    </c-col>
+
+</c-row>

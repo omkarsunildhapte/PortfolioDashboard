@@ -1,14 +1,5 @@
 {
-  "targets": {
-    "portfoliowebsite-ddc10": {
-      "hosting": {
-        "portofinoDashboard": [
-          "portfoliowebsite-ddc10"
-        ]
-      }
-    }
-  },
   "projects": {
-    "default": "portfoliowebsite-ddc10"
+    "default": "omkar-dhapte-developer"
   }
 }
